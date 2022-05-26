@@ -1,8 +1,10 @@
 import { ViewContainer } from 'GlobalStyles.styled';
+import SignIn from 'components/SignIn/SignIn';
+
 export const LoginView = () => {
   return (
     <ViewContainer>
-      <h1>Login Page</h1>
+      <SignIn />
     </ViewContainer>
   );
 };

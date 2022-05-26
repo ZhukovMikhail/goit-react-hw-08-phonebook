@@ -1,21 +1,15 @@
-import {
-  Routes,
-  Route,
-  // useNavigate,
-  // useLocation,
-  // Router,
-} from 'react-router-dom';
-import { NavBar } from './NavBar/NavBar';
+import { Routes, Route } from 'react-router-dom';
 import { HomeView } from './views/HomeView/HomeView';
 import { LoginView } from './views/LoginView/LoginView';
 import { ContactsView } from './views/ContactsView/ContactsView';
 import { NotFoundView } from './views/NotFound/NotFound';
 import { RegisterView } from './views/RegisterView/RegisterView';
+import ResponsiveAppBar from './NavBar/NavBar';
 
 export const App = () => {
   return (
     <div>
-      <NavBar />
+      <ResponsiveAppBar />
       <Routes>
         <Route path="/" element={<HomeView />} />
         <Route path="/register" element={<RegisterView />} />

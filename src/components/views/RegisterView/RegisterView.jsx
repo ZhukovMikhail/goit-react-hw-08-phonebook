@@ -1,8 +1,9 @@
 import { ViewContainer } from 'GlobalStyles.styled';
+import SignUp from 'components/SingUp/SignUp';
 export const RegisterView = () => {
   return (
     <ViewContainer>
-      <h1>Register Page</h1>
+      <SignUp />
     </ViewContainer>
   );
 };

@@ -129,7 +129,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/goit-react-hw-08-phonebook/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

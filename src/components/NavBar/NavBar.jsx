@@ -29,23 +29,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
-const objWithPages = [
-  {
-    mane: 'Home Page',
-    link: '/',
-  },
-  {
-    mane: 'Registration',
-    link: '/register',
-  },
-  {
-    mane: 'Login',
-    link: '/login',
-  },
-];
-// const pages = ['Home Page', 'Registration', 'Login'];
 const pages = [
   {
     name: 'Home Page',

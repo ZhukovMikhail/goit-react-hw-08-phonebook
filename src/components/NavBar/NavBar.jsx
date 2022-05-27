@@ -44,7 +44,12 @@ const pages = [
     link: '/login',
   },
 ];
-const settings = ['Profile', 'Contacts', 'Logout'];
+
+const settings = [
+  { name: 'Profile', link: '/' },
+  { name: 'Contacts', link: '/contacts' },
+  { name: 'Logout', link: '' },
+];
 
 const ResponsiveAppBar = () => {
   const navigate = useNavigate();
@@ -68,7 +73,8 @@ const ResponsiveAppBar = () => {
 
   const handleCloseUserMenu = e => {
     setAnchorElUser(null);
-    // console.log('Ava close', e.currentTarget.firstElementChild);
+    navigate(e.currentTarget.dataset.link);
+    console.log('Ava close', e.currentTarget.dataset);
   };
 
   return (
@@ -189,8 +195,12 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map(setting => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem
+                  key={setting.name}
+                  onClick={handleCloseUserMenu}
+                  data-link={setting.link}
+                >
+                  <Typography textAlign="center">{setting.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>

@@ -4,10 +4,18 @@ import { LoginView } from './views/LoginView/LoginView';
 import { ContactsView } from './views/ContactsView/ContactsView';
 import { NotFoundView } from './views/NotFound/NotFound';
 import { RegisterView } from './views/RegisterView/RegisterView';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import * as authOperations from '../redux/auth/authOperations';
 
 import ResponsiveAppBar from './NavBar/NavBar';
 
 export const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authOperations.fetchCurrentUser());
+  }, [dispatch]);
   return (
     <div>
       <ResponsiveAppBar />

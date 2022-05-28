@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Form, Field } from 'formik';
-import { StyledButton } from '../Button/Button.Styled';
+import { StyledButton } from 'components/Contacts/components/Button/Button.Styled';
 // import { Formik, Field, ErrorMessage } from 'formik';
 
 export const StyledForm = styled(Form)`

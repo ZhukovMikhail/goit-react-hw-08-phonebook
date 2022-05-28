@@ -1,15 +1,16 @@
-import { useCreateContactMutation } from 'redux/createApi';
-import { BackDrop } from '../Modal/Modal.styled';
-import { StyledButton } from '../Button/Button.Styled.jsx';
-import { MyForm } from '../Form/Form';
+import { useCreateContactMutation } from 'redux/contacts/createApi';
+import { BackDrop } from 'components/Contacts/components/Modal/Modal.styled';
+import { StyledButton } from 'components/Contacts/components/Button/Button.Styled.jsx';
+import { MyForm } from 'components/Contacts/components/Form/Form.jsx';
 import { useSelector, useDispatch } from 'react-redux';
-import { selector } from 'redux/modalSlice';
+import { selector } from 'redux/contacts/modalSlice';
 import PropTypes from 'prop-types';
 
 export const NavBar = () => {
   const modalSelector = useSelector(state => state.modal.selector);
   const dispatch = useDispatch();
   const [addContact] = useCreateContactMutation();
+
   const addContactModal = e => {
     dispatch(selector('add'));
   };
@@ -22,7 +23,6 @@ export const NavBar = () => {
       )}
       {modalSelector === 'add' && (
         <BackDrop>
-          {/* <ModalOverlay> */}
           <MyForm
             mutator={addContact}
             initialFormValues={{ name: '', number: '' }}
@@ -30,7 +30,6 @@ export const NavBar = () => {
             btn2="Clear Form"
             name="AddContact"
           />
-          {/* </ModalOverlay> */}
         </BackDrop>
       )}
     </>

@@ -1,8 +1,8 @@
 import { StyledLabel, StyledImput } from './Filter.styled';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { filterContact } from 'redux/filterSlice';
-import { useGetContactsQuery } from 'redux/createApi';
+import { filterContact } from 'redux/contacts/filterSlice';
+import { useGetContactsQuery } from 'redux/contacts/createApi';
 
 export const Filter = () => {
   const dispatch = useDispatch();

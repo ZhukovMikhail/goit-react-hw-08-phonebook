@@ -1,19 +1,27 @@
 import { StyledContList } from './Contacts.styled';
 import { useSelector } from 'react-redux';
-import { getFilter } from 'redux/filterSlice';
-import { useGetContactsQuery } from 'redux/createApi';
+import { getFilter } from 'redux/contacts/filterSlice';
+import { useGetContactsQuery } from 'redux/contacts/createApi';
+// import { useDispatch } from 'react-redux';
+// import * as contactsOperation from 'redux/contacts/contactsOperation';
+// import { useEffect } from 'react';
+
 import PropTypes from 'prop-types';
-import { ContactItem } from '../ContactItem/ContactItem';
+import { ContactItem } from 'components/Contacts/components/ContactItem/ContactItem';
 import { useMemo } from 'react';
 
 export const Contacts = () => {
-  const filter = useSelector(getFilter);
+  // const dispatch = useDispatch();
+  // const contacts = useSelector(state => state.contacts);
+  // useEffect(() => {
+  //   dispatch(contactsOperation.getContacts());
+  // }, [dispatch]);
 
+  const filter = useSelector(getFilter);
   const { data: contacts = [] } = useGetContactsQuery();
 
   const filteredContacts = useMemo(() => {
     return contacts.filter(contact => {
-      // console.log('filter');
       return contact.name
         .toLocaleLowerCase()
         .includes(filter.toLocaleLowerCase());
@@ -25,7 +33,6 @@ export const Contacts = () => {
   return (
     <StyledContList>
       {shownContacts.map(contact => {
-        // console.log('map');
         return <ContactItem contact={contact} key={contact.id} />;
       })}
     </StyledContList>

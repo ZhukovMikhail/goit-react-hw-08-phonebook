@@ -1,3 +1,9 @@
+import { ViewContainer } from 'GlobalStyles.styled';
+import { PhoneBook } from 'components/Contacts/PhoneBook';
 export const ContactsView = () => {
-  return <p>Login Page</p>;
+  return (
+    <ViewContainer>
+      <PhoneBook />
+    </ViewContainer>
+  );
 };

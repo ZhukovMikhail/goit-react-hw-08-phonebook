@@ -28,9 +28,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useSelector, useDispatch } from 'react-redux';
+import * as authOperations from '../../redux/auth/authOperations';
 import { useState } from 'react';
 
-const pages = [
+const isLoggedOutpages = [
   {
     name: 'Home Page',
     link: '/',
@@ -45,14 +47,27 @@ const pages = [
   },
 ];
 
+const isLoggedInPages = [
+  {
+    name: 'Home Page',
+    link: '/',
+  },
+];
+
 const settings = [
   { name: 'Profile', link: '/' },
   { name: 'Contacts', link: '/contacts' },
-  { name: 'Logout', link: '' },
+  { name: 'Logout', link: '/' },
 ];
 
 const ResponsiveAppBar = () => {
+  const isloggedIn = useSelector(state => state.auth.isLoggedIn);
+  const userName = useSelector(state => state.auth.user.name);
+  console.log(isloggedIn);
+  console.log(userName);
+  const pages = isloggedIn ? isLoggedInPages : isLoggedOutpages;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -73,20 +88,23 @@ const ResponsiveAppBar = () => {
 
   const handleCloseUserMenu = e => {
     setAnchorElUser(null);
-    navigate(e.currentTarget.dataset.link);
-    console.log('Ava close', e.currentTarget.dataset);
+    e.currentTarget.dataset?.link && navigate(e.currentTarget.dataset.link);
+    e.currentTarget.dataset.name === 'Logout' &&
+      dispatch(authOperations.logOut());
+    // console.log('is Logout true?', e.currentTarget.dataset.name === 'Logout');
+    // console.log('Ava name', e.currentTarget.dataset.name);
   };
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+          {/* <Typography
+            variant="h5"
             noWrap
             component="a"
-            href="/goit-react-hw-08-phonebook"
+            href="/goit-react-hw-08-phonebook/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -98,7 +116,7 @@ const ResponsiveAppBar = () => {
             }}
           >
             LOGO
-          </Typography>
+          </Typography> */}
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -172,39 +190,42 @@ const ResponsiveAppBar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map(setting => (
-                <MenuItem
-                  key={setting.name}
-                  onClick={handleCloseUserMenu}
-                  data-link={setting.link}
-                >
-                  <Typography textAlign="center">{setting.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {isloggedIn && (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt={userName} src="./" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map(setting => (
+                  <MenuItem
+                    key={setting.name}
+                    onClick={handleCloseUserMenu}
+                    data-link={setting.link}
+                    data-name={setting.name}
+                  >
+                    <Typography textAlign="center">{setting.name}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

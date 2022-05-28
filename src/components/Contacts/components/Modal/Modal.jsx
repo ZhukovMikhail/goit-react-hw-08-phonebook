@@ -1,15 +1,15 @@
 import { BackDrop } from './Modal.styled';
 import {
   useEditContactMutation,
-  useGetContactByIdQuery,
+  useGetContactsQuery,
 } from 'redux/contacts/createApi';
-// import { useSelector } from 'react-redux';
 import { MyForm } from 'components/Contacts/components/Form/Form';
 import PropTypes from 'prop-types';
 
 export const Modal = ({ id }) => {
   const [editContact, { isLoading }] = useEditContactMutation();
-  const { data: contact } = useGetContactByIdQuery(id);
+  const { data: contacts = [] } = useGetContactsQuery();
+  const contact = contacts.find(c => c.id === id);
 
   isLoading && document.querySelector('body').classList.remove('fixed');
   return (

@@ -9,8 +9,8 @@ import { StyledButton } from 'components/Contacts/components/Button/Button.Style
 import { notify, isContactDubled, schema } from 'utils/utils';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { useGetContactsQuery } from 'redux/contacts/createApi';
-import { useSelector } from 'react-redux';
+import { useGetContactsQuery } from 'redux/contacts/createApi';
+// import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { selector } from 'redux/contacts/modalSlice';
 import PropTypes from 'prop-types';
@@ -25,8 +25,8 @@ export const MyForm = ({
 }) => {
   const dispatch = useDispatch();
 
-  // const { data: contacts = [] } = useGetContactsQuery();
-  const contacts = useSelector(state => state.contacts);
+  const { data: contacts = [] } = useGetContactsQuery();
+  // const contacts = useSelector(state => state.contacts);
 
   const handleSubmit = async (values, { resetForm }) => {
     if (

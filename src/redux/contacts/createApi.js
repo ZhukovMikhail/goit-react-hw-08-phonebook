@@ -5,22 +5,39 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const contactsApi = createApi({
   reducerPath: 'contacts',
+  // baseQuery: fetchBaseQuery({
+  //   baseUrl: 'https://6263d2ab005a66e1e3b76fcd.mockapi.io',
+  // }),
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://6263d2ab005a66e1e3b76fcd.mockapi.io',
+    baseUrl: 'https://connections-api.herokuapp.com',
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token;
+
+      // If we have a token set in state, let's assume that we should be passing it.
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      } else {
+        headers.delete('authorization');
+      }
+
+      return headers;
+    },
   }),
+
   tagTypes: ['Contacts'],
   endpoints: builder => ({
     getContacts: builder.query({
       query: () => '/contacts',
       providesTags: ['Contacts'],
+      keepUnusedDataFor: 2,
     }),
-    getContactById: builder.query({
-      query: id => ({
-        url: `/contacts/${id}`,
-        method: 'GET',
-      }),
-      providesTags: ['Contacts'],
-    }),
+    // getContactById: builder.query({
+    //   query: id => ({
+    //     url: `/contacts/${id}`,
+    //     method: 'GET',
+    //   }),
+    //   providesTags: ['Contacts'],
+    // }),
     createContact: builder.mutation({
       query: contact => ({
         url: `/contacts`,
@@ -38,10 +55,10 @@ export const contactsApi = createApi({
     }),
 
     editContact: builder.mutation({
-      query: ({ id, ...contact }) => ({
+      query: ({ id, name, number }) => ({
         url: `/contacts/${id}`,
-        method: 'PUT',
-        body: contact,
+        method: 'PATCH',
+        body: { name, number },
       }),
       invalidatesTags: ['Contacts'],
     }),
@@ -52,7 +69,7 @@ export const contactsApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useGetContactsQuery,
-  useGetContactByIdQuery,
+  // useGetContactByIdQuery,
   useCreateContactMutation,
   useDeleteContactMutation,
 

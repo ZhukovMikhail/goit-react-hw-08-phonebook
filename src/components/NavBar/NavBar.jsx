@@ -1,21 +1,6 @@
-// import { AuthNav } from 'components/AuthNav/AuthNav';
-// import { Navigation } from 'components/Navigation/Navigation';
-// import { UserMenu } from 'components/UserMenu/UserMenu';
-// import { Container } from './NavBar.styled';
-
-// export const NavBar = () => {
-//   return (
-
-//     children
-//     <Container>
-//       <Navigation />
-//       <AuthNav />
-//       <UserMenu />
-//     </Container>
-//   );
-// };
 import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
+import { AppBarStyled } from './NavBar.styled';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -31,6 +16,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useSelector, useDispatch } from 'react-redux';
 import * as authOperations from '../../redux/auth/authOperations';
 import { useState } from 'react';
+import { teal, cyan } from '@mui/material/colors';
 
 const isLoggedOutpages = [
   {
@@ -52,11 +38,12 @@ const isLoggedInPages = [
     name: 'Home Page',
     link: '/',
   },
+  { name: 'Contacts', link: '/contacts' },
 ];
 
 const settings = [
   { name: 'Profile', link: '/' },
-  { name: 'Contacts', link: '/contacts' },
+
   { name: 'Logout', link: '/' },
 ];
 
@@ -96,7 +83,7 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBarStyled position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
@@ -228,7 +215,7 @@ const ResponsiveAppBar = () => {
           )}
         </Toolbar>
       </Container>
-    </AppBar>
+    </AppBarStyled>
   );
 };
 export default ResponsiveAppBar;

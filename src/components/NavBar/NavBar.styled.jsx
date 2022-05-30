@@ -1,4 +1,15 @@
 import styled from '@emotion/styled';
+import AppBar from '@mui/material/AppBar';
+import {
+  mainColor,
+  // secondColor,
+  // bgColor,
+  // buttonColor,
+} from 'components/AppMainStyled.styled';
+
+export const AppBarStyled = styled(AppBar)`
+  background-color: ${mainColor};
+`;
 export const Container = styled.div`
   position: fixed;
   top: 0;

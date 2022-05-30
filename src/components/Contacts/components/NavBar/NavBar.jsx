@@ -1,10 +1,13 @@
 import { useCreateContactMutation } from 'redux/contacts/createApi';
 import { BackDrop } from 'components/Contacts/components/Modal/Modal.styled';
-import { StyledButton } from 'components/Contacts/components/Button/Button.Styled.jsx';
+import { PhoneBookHeader, PhoneBookBox } from './NavBar.styled';
 import { MyForm } from 'components/Contacts/components/Form/Form.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { selector } from 'redux/contacts/modalSlice';
 import PropTypes from 'prop-types';
+// import { Button } from '@mui/material';
+import { RiUserAddLine } from 'react-icons/ri';
+import { StyledButton } from './NavBar.styled';
 
 export const NavBar = () => {
   const modalSelector = useSelector(state => state.modal.selector);
@@ -16,10 +19,18 @@ export const NavBar = () => {
   };
 
   return (
-    <>
-      <h1>Phonebook</h1>
+    <PhoneBookBox>
+      <PhoneBookHeader>Phonebook</PhoneBookHeader>
       {!modalSelector && (
-        <StyledButton onClick={addContactModal}>AddContact</StyledButton>
+        // <StyledButton onClick={addContactModal}>Add Contact</StyledButton>
+        <StyledButton
+          variant="contained"
+          endIcon={<RiUserAddLine />}
+          color="primary"
+          onClick={addContactModal}
+        >
+          Add Contact
+        </StyledButton>
       )}
       {modalSelector === 'add' && (
         <BackDrop>
@@ -32,7 +43,7 @@ export const NavBar = () => {
           />
         </BackDrop>
       )}
-    </>
+    </PhoneBookBox>
   );
 };
 

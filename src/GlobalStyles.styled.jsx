@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+
 export const ViewContainer = styled.div`
   display: flex;
   justify-content: center;

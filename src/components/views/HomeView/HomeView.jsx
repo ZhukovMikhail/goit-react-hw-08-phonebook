@@ -1,11 +1,13 @@
 import { ViewContainer } from 'GlobalStyles.styled';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Greatings, TextBox } from './HomeView.styled';
 import HomeBG from '../../../images/home-bg.jpg';
 import { StyledButton } from '../../../GlobalStyles.styled';
 import { useNavigate } from 'react-router-dom';
+import { setPath } from 'redux/auth/authSlice';
 
 const HomeView = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const userName = useSelector(store => store.auth.user.name);
@@ -16,6 +18,7 @@ const HomeView = () => {
     navigate('/login');
   };
   const onGettingStarted = () => {
+    isLoggedIn && dispatch(setPath('/contacts'));
     navigate('/contacts');
   };
   return (

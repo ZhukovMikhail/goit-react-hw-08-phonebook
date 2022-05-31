@@ -19,11 +19,11 @@ export const StyledItem = styled.li`
   cursor: pointer;
 
   &:hover {
-    background-color: rgba(204, 204, 204, 0.4);
+    background-color: rgba(204, 204, 204, 0.65);
   }
 
   &.vissible {
-    background-color: rgba(204, 204, 204, 0.2);
+    background-color: rgba(204, 204, 204, 0.45);
     transition: 500ms;
   }
 `;
@@ -97,6 +97,6 @@ export const PreEditIcon = styled(AiFillEdit)`
 export const DeleteOnLoadIcon = styled(MdAutoDelete)`
   height: 25px;
   width: 25px;
-  fill: rgba(245, 222, 179, 0.5);
+  fill: #fff;
   margin-right: 35px;
 `;

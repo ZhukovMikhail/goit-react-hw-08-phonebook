@@ -69,12 +69,10 @@ const ResponsiveAppBar = () => {
 
   const handleCloseUserMenu = e => {
     setAnchorElUser(null);
-    // e.currentTarget.dataset?.link && navigate(e.currentTarget.dataset.link);
-    //
+
     e.currentTarget.dataset.name === 'Logout' &&
       isloggedIn &&
       dispatch(authOperations.logOut());
-    // dispatch(setPath(null));
   };
 
   return (

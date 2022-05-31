@@ -6,11 +6,18 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   pendingUserData: false,
+  currentPath: null,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+
+  reducers: {
+    setPath: (state, action) => {
+      state.currentPath = action.payload;
+    },
+  },
   extraReducers: {
     [authOperations.register.fulfilled]: (state, action) => {
       state.user = action.payload.user;
@@ -26,6 +33,7 @@ const authSlice = createSlice({
       state.user = { name: null, email: null };
       state.token = null;
       state.isLoggedIn = false;
+      state.currentPath = null;
     },
     [authOperations.fetchCurrentUser.pending]: (state, _) => {
       state.pendingUserData = true;
@@ -40,5 +48,6 @@ const authSlice = createSlice({
     },
   },
 });
+export const { setPath } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

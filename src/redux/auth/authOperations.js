@@ -1,4 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+// import { useSelector } from 'react-redux';
+// import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
@@ -45,13 +47,14 @@ export const fetchCurrentUser = createAsyncThunk(
     const persistedToken = state.auth.token;
 
     if (persistedToken === null) {
-      console.log('Токена нет, уходим из fetchCurrentUser');
+      // console.log('Токена нет, уходим из fetchCurrentUser');
       return thunkAPI.rejectWithValue();
     }
 
     token.set(persistedToken);
     try {
       const { data } = await axios.get('/users/current');
+
       return data;
     } catch (error) {
       console.log(error);

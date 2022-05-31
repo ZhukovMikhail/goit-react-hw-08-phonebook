@@ -15,6 +15,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useSelector, useDispatch } from 'react-redux';
 import * as authOperations from '../../redux/auth/authOperations';
 import { useState } from 'react';
+import { setPath } from 'redux/auth/authSlice';
 
 const isLoggedOutpages = [
   {
@@ -61,15 +62,19 @@ const ResponsiveAppBar = () => {
 
   const handleCloseNavMenu = e => {
     setAnchorElNav(null);
-    console.log('Burger close', e.currentTarget.dataset);
+
+    isloggedIn && dispatch(setPath(e.currentTarget.dataset.link));
     navigate(e.currentTarget.dataset.link);
   };
 
   const handleCloseUserMenu = e => {
     setAnchorElUser(null);
-    e.currentTarget.dataset?.link && navigate(e.currentTarget.dataset.link);
+    // e.currentTarget.dataset?.link && navigate(e.currentTarget.dataset.link);
+    //
     e.currentTarget.dataset.name === 'Logout' &&
+      isloggedIn &&
       dispatch(authOperations.logOut());
+    // dispatch(setPath(null));
   };
 
   return (

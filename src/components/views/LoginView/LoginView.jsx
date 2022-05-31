@@ -1,5 +1,7 @@
 import SignIn from 'components/SignIn/SignIn';
 
-export const LoginView = () => {
+const LoginView = () => {
   return <SignIn />;
 };
+
+export default LoginView;

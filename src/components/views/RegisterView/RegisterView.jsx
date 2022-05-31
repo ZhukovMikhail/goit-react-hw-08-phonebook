@@ -1,4 +1,5 @@
 import SignUp from 'components/SingUp/SignUp';
-export const RegisterView = () => {
+const RegisterView = () => {
   return <SignUp />;
 };
+export default RegisterView;

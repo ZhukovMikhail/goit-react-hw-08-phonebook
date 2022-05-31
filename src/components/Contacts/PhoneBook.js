@@ -5,7 +5,7 @@ import { Filter } from 'components/Contacts/components/Filter/Filter.jsx';
 import { NavBar } from 'components/Contacts/components/NavBar/NavBar.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const PhoneBook = () => {
+const PhoneBook = () => {
   return (
     <Container>
       <NavBar />
@@ -14,3 +14,4 @@ export const PhoneBook = () => {
     </Container>
   );
 };
+export default PhoneBook;

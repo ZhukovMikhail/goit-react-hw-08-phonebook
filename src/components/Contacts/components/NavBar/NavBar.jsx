@@ -7,7 +7,7 @@ import { selector } from 'redux/contacts/modalSlice';
 import PropTypes from 'prop-types';
 // import { Button } from '@mui/material';
 import { RiUserAddLine } from 'react-icons/ri';
-import { StyledButton } from './NavBar.styled';
+import { StyledButton } from '../../../../GlobalStyles.styled';
 
 export const NavBar = () => {
   const modalSelector = useSelector(state => state.modal.selector);

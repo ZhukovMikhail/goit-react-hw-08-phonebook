@@ -1,18 +1,20 @@
 import { Routes, Route } from 'react-router-dom';
-import { HomeView } from './views/HomeView/HomeView';
-import { LoginView } from './views/LoginView/LoginView';
-// import { ContactsView } from './views/ContactsView/ContactsView';
-import { PhoneBook } from './Contacts/PhoneBook';
-import { NotFoundView } from './views/NotFound/NotFound';
-import { RegisterView } from './views/RegisterView/RegisterView';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from './Loading/Loading';
+import { lazy, useEffect, Suspense } from 'react';
 import * as authOperations from '../redux/auth/authOperations';
-
 import ResponsiveAppBar from './NavBar/NavBar';
+import { PublicRoute, PrivateRoute } from './CustomRoutes/CustomRoutes';
+
+export const Home = lazy(() => import('./views/HomeView/HomeView'));
+export const Login = lazy(() => import('./views/LoginView/LoginView'));
+export const ContactBook = lazy(() => import('./Contacts/PhoneBook'));
+export const NotFound = lazy(() => import('./views/NotFound/NotFound'));
+export const Register = lazy(() => import('./views/RegisterView/RegisterView'));
 
 export const App = () => {
   const dispatch = useDispatch();
+  const pendingUserData = useSelector(state => state.auth.pendingUserData);
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
@@ -20,13 +22,45 @@ export const App = () => {
   return (
     <>
       <ResponsiveAppBar />
-      <Routes>
-        <Route path="/" element={<HomeView />} />
-        <Route path="/register" element={<RegisterView />} />
-        <Route path="/login" element={<LoginView />} />
-        <Route path="/contacts" element={<PhoneBook />} />
-        <Route path="*" element={<NotFoundView />} />
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        {!pendingUserData && (
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <PublicRoute>
+                  <Home />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <PublicRoute path={'/'} restricted>
+                  <Register />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <PublicRoute path={'/'} restricted>
+                  <Login />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/contacts"
+              element={
+                <PrivateRoute>
+                  <ContactBook />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        )}
+      </Suspense>
     </>
   );
 };

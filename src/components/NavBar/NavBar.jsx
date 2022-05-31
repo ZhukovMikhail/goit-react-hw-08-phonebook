@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
 import { AppBarStyled } from './NavBar.styled';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,7 +15,6 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useSelector, useDispatch } from 'react-redux';
 import * as authOperations from '../../redux/auth/authOperations';
 import { useState } from 'react';
-import { teal, cyan } from '@mui/material/colors';
 
 const isLoggedOutpages = [
   {
@@ -41,11 +39,7 @@ const isLoggedInPages = [
   { name: 'Contacts', link: '/contacts' },
 ];
 
-const settings = [
-  { name: 'Profile', link: '/' },
-
-  { name: 'Logout', link: '/' },
-];
+const settings = [{ name: 'Logout', link: '/' }];
 
 const ResponsiveAppBar = () => {
   const isloggedIn = useSelector(state => state.auth.isLoggedIn);
@@ -60,11 +54,9 @@ const ResponsiveAppBar = () => {
 
   const handleOpenNavMenu = event => {
     setAnchorElNav(event.currentTarget);
-    // console.log('Burger click', event.currentTarget);
   };
   const handleOpenUserMenu = event => {
     setAnchorElUser(event.currentTarget);
-    // console.log('Ava click', event.currentTarget);
   };
 
   const handleCloseNavMenu = e => {
@@ -78,33 +70,12 @@ const ResponsiveAppBar = () => {
     e.currentTarget.dataset?.link && navigate(e.currentTarget.dataset.link);
     e.currentTarget.dataset.name === 'Logout' &&
       dispatch(authOperations.logOut());
-    // console.log('is Logout true?', e.currentTarget.dataset.name === 'Logout');
-    // console.log('Ava name', e.currentTarget.dataset.name);
   };
 
   return (
     <AppBarStyled position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          {/* <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/goit-react-hw-08-phonebook/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography> */}
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"

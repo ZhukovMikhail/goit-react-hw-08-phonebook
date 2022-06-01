@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ViewContainer } from 'GlobalStyles.styled';
 import { BiTimeFive, BiError } from 'react-icons/bi';
+import HomeBG from '../../../images/contacts-bg.jpg';
 
 const setTimer = 5;
 const NotFoundView = () => {
@@ -27,7 +28,7 @@ const NotFoundView = () => {
   console.log('timerId:', timerId);
 
   return (
-    <ViewContainer>
+    <ViewContainer style={{ backgroundImage: `url(${HomeBG})` }}>
       <div
         style={{
           position: 'fixed',

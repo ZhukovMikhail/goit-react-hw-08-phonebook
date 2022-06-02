@@ -42,7 +42,6 @@ export default function SignIn() {
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
-
     name === 'email' && setEmail(value);
     name === 'password' && setPassword(value);
   };
@@ -54,7 +53,6 @@ export default function SignIn() {
       let regEmail = new RegExp(emailRegexp).test(value);
       !regEmail && setEmailError('Invalid email format');
       regEmail && setEmailError(null);
-      console.log('regEmail', regEmail);
     }
   };
 

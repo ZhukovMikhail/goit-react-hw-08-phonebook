@@ -59,13 +59,11 @@ export default function SignUp() {
       let regName = new RegExp(nameRegexp).test(value);
       !regName && setNameError('name must contain 3-22 symbols (A-Z,a-z,0-9)');
       regName && setNameError(null);
-      console.log('regName', regName);
     }
     if (name === 'email') {
       let regEmail = new RegExp(emailRegexp).test(value);
       !regEmail && setEmailError('Invalid email format');
       regEmail && setEmailError(null);
-      console.log('regEmail', regEmail);
     }
 
     if (name === 'password') {
@@ -73,7 +71,6 @@ export default function SignUp() {
       !regPassword &&
         setPasswordError('password must contain 3-22 symbols (A-Z,a-z,0-9)');
       regPassword && setPasswordError(null);
-      console.log('regEmail', regPassword);
     }
   };
   const dispatch = useDispatch();
@@ -86,7 +83,7 @@ export default function SignUp() {
       email: email.value,
       password: password.value,
     };
-    console.log(data);
+
     dispatch(authOperations.register(data));
     event.currentTarget.reset();
   };

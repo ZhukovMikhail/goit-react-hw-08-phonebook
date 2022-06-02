@@ -45,8 +45,7 @@ const settings = [{ name: 'Logout', link: '/' }];
 const ResponsiveAppBar = () => {
   const isloggedIn = useSelector(state => state.auth.isLoggedIn);
   const userName = useSelector(state => state.auth.user.name);
-  console.log(isloggedIn);
-  console.log(userName);
+
   const pages = isloggedIn ? isLoggedInPages : isLoggedOutpages;
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -62,7 +61,7 @@ const ResponsiveAppBar = () => {
 
   const handleCloseNavMenu = e => {
     setAnchorElNav(null);
-    console.log('e.currentTarget.dataset.name', e.currentTarget.dataset.name);
+
     if (e.currentTarget.dataset.name === undefined) {
       return;
     }

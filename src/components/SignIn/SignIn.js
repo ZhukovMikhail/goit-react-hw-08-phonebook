@@ -12,6 +12,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import * as authOperations from '../../redux/auth/authOperations';
+import { useState } from 'react';
+import { emailRegexp } from 'utils/utils';
 
 function Copyright(props) {
   return (
@@ -34,16 +36,39 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const [emailField, setEmail] = useState('');
+  const [passwordField, setPassword] = useState('');
+  const [emailError, setEmailError] = useState();
+
+  const handleChange = e => {
+    const { name, value } = e.currentTarget;
+
+    name === 'email' && setEmail(value);
+    name === 'password' && setPassword(value);
+  };
+
+  const handleBlur = e => {
+    const { name, value } = e.currentTarget;
+
+    if (name === 'email') {
+      let regEmail = new RegExp(emailRegexp).test(value);
+      !regEmail && setEmailError('Invalid email format');
+      regEmail && setEmailError(null);
+      console.log('regEmail', regEmail);
+    }
+  };
+
   const dispatch = useDispatch();
+
   const handleSubmit = event => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const signInFormValues = {
-      email: data.get('email'),
-      password: data.get('password'),
+    const { email, password } = event.currentTarget.elements;
+    const data = {
+      email: email.value,
+      password: password.value,
     };
-    console.log(signInFormValues);
-    dispatch(authOperations.login(signInFormValues));
+
+    dispatch(authOperations.login(data));
     event.currentTarget.reset();
   };
 
@@ -72,14 +97,20 @@ export default function SignIn() {
             sx={{ mt: 1 }}
           >
             <TextField
+              error={Boolean(emailError)}
+              helperText={emailError}
               margin="normal"
               required
               fullWidth
               id="email"
               label="Email Address"
               name="email"
+              type="email"
               autoComplete="email"
               autoFocus
+              onChange={handleChange}
+              value={emailField}
+              onBlur={handleBlur}
             />
             <TextField
               margin="normal"
@@ -90,12 +121,15 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange}
+              value={passwordField}
             />
 
             <Button
               type="submit"
               fullWidth
               variant="contained"
+              disabled={Boolean(emailError)}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In

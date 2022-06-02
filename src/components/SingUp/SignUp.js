@@ -15,13 +15,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 // import * as authOperations from '../redux/auth/authOperations';
 import * as authOperations from '../../redux/auth/authOperations';
+import { useState } from 'react';
+import { emailRegexp, nameRegexp, passwordRegexp } from 'utils/utils';
 
 function Copyright(props) {
-  //   const [name, setName] = useState('');
-  //   const [lastName, setLastName] = useState('');
-  //   const [email, setEmail] = useState('');
-  //   const [password, setPassword] = useState('');
-
   return (
     <Typography
       variant="body2"
@@ -42,17 +39,55 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const [nameField, setName] = useState('');
+  const [emailField, setEmail] = useState('');
+  const [passwordField, setPassword] = useState('');
+  const [nameError, setNameError] = useState();
+  const [emailError, setEmailError] = useState();
+  const [passwordError, setPasswordError] = useState();
+
+  const handleChange = e => {
+    const { name, value } = e.currentTarget;
+    name === 'name' && setName(value);
+    name === 'email' && setEmail(value);
+    name === 'password' && setPassword(value);
+  };
+
+  const handleBlur = e => {
+    const { name, value } = e.currentTarget;
+    if (name === 'name') {
+      let regName = new RegExp(nameRegexp).test(value);
+      !regName && setNameError('name must contain 3-22 symbols (A-Z,a-z,0-9)');
+      regName && setNameError(null);
+      console.log('regName', regName);
+    }
+    if (name === 'email') {
+      let regEmail = new RegExp(emailRegexp).test(value);
+      !regEmail && setEmailError('Invalid email format');
+      regEmail && setEmailError(null);
+      console.log('regEmail', regEmail);
+    }
+
+    if (name === 'password') {
+      let regPassword = new RegExp(passwordRegexp).test(value);
+      !regPassword &&
+        setPasswordError('password must contain 3-22 symbols (A-Z,a-z,0-9)');
+      regPassword && setPasswordError(null);
+      console.log('regEmail', regPassword);
+    }
+  };
   const dispatch = useDispatch();
   const handleSubmit = event => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const signUpFormValues = {
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
+    const { name, email, password } = event.currentTarget.elements;
+
+    const data = {
+      name: name.value,
+      email: email.value,
+      password: password.value,
     };
-    console.log(signUpFormValues);
-    dispatch(authOperations.register(signUpFormValues));
+    console.log(data);
+    dispatch(authOperations.register(data));
     event.currentTarget.reset();
   };
 
@@ -83,37 +118,42 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  error={Boolean(nameError)}
+                  helperText={nameError}
                   autoComplete="given-name"
                   name="name"
+                  type="text"
                   required
                   fullWidth
                   id="name"
                   label="Name"
                   autoFocus
+                  value={nameField}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid> */}
+
               <Grid item xs={12}>
                 <TextField
+                  error={Boolean(emailError)}
+                  helperText={emailError}
                   required
                   fullWidth
-                  id="email"
                   label="Email Address"
+                  id="email"
+                  type="email"
                   name="email"
                   autoComplete="email"
+                  onChange={handleChange}
+                  value={emailField}
+                  onBlur={handleBlur}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  error={Boolean(passwordError)}
+                  helperText={passwordError}
                   required
                   fullWidth
                   name="password"
@@ -121,21 +161,17 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handleChange}
+                  value={passwordField}
+                  onBlur={handleBlur}
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid> */}
             </Grid>
             <Button
               type="submit"
               fullWidth
               variant="contained"
+              disabled={Boolean(emailError ?? nameError ?? passwordError)}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up

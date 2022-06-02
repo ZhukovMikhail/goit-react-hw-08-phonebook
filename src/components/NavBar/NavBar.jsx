@@ -62,7 +62,10 @@ const ResponsiveAppBar = () => {
 
   const handleCloseNavMenu = e => {
     setAnchorElNav(null);
-
+    console.log('e.currentTarget.dataset.name', e.currentTarget.dataset.name);
+    if (e.currentTarget.dataset.name === undefined) {
+      return;
+    }
     isloggedIn && dispatch(setPath(e.currentTarget.dataset.link));
     navigate(e.currentTarget.dataset.link);
   };
@@ -92,6 +95,7 @@ const ResponsiveAppBar = () => {
             </IconButton>
             <Menu
               id="menu-appbar"
+              data-name="burger"
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: 'bottom',
@@ -111,6 +115,7 @@ const ResponsiveAppBar = () => {
               {pages.map(page => (
                 <MenuItem
                   data-link={page.link}
+                  data-name={page.name}
                   key={page.name}
                   onClick={handleCloseNavMenu}
                 >
@@ -142,6 +147,7 @@ const ResponsiveAppBar = () => {
             {pages.map(page => (
               <Button
                 data-link={page.link}
+                data-name={page.name}
                 key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}

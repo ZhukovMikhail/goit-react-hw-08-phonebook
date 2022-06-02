@@ -25,3 +25,11 @@ export const schema = yup.object().shape({
     .max(12)
     .required(),
 });
+
+// export const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+export const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+
+export const nameRegexp = /^[A-Za-z][A-Za-z0-9_]{2,20}$/; //name must contain 1-19 symbols (A-Z,a-z,0-9)
+
+export const passwordRegexp = /^[A-Za-z][A-Za-z0-9_]{2,19}$/; //password must contain 1-19 symbols (A-Z,a-z,0-9)
